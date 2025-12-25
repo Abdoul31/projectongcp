@@ -5,6 +5,7 @@ substitutions:
   PROJECT_ID: manssacloudgcp
 
 steps:
+#########BUILD iMAGE################
   - name: 'gcr.io/cloud-builders/docker'
     id: 'build-frontend'
     args:
@@ -12,6 +13,7 @@ steps:
       - '-t'
       - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/frontend:$SHORT_SHA'
       - './src/frontend'
+      #######SCAN IMAGE################
   - name: 'aquasec/trivy'
     args:
       - image
@@ -21,7 +23,7 @@ steps:
       - '1'
       - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/frontend:$SHORT_SHA'
 
-
+##################PUSH D'IMAGE###################
   - name: 'gcr.io/cloud-builders/docker'
     id: 'push-frontend'
     args:
