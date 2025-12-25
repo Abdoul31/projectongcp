@@ -29,7 +29,7 @@ steps:
     args:
       - push
       - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/frontend:$SHORT_SHA'
-##################2
+##################BUILD IMAGE########################
   - name: 'gcr.io/cloud-builders/docker'
     id: 'build-adservice'
     args:
