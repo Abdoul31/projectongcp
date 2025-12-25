@@ -37,7 +37,7 @@ steps:
       - '-t'
       - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/adservice:$SHORT_SHA'
       - './src/adservice'
-
+#################SCAN TRIVY##################""
   - name: 'aquasec/trivy'
     args:
       - image
