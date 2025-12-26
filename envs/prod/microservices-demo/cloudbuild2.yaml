@@ -2,7 +2,7 @@
 substitutions:
   _REGION: europe-west2
   _REPO: projectongcp
-  PROJECT_ID: manssacloudgcp
+  _PROJECT_ID: manssacloudgcp
 
 logsBucket: gs://myservices-logs
 
