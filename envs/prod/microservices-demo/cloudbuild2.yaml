@@ -263,5 +263,5 @@ steps:
     args:
       - push
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/shippingservice:$SHORT_SHA'
-           ##################################""
+           
   
