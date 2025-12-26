@@ -3,6 +3,7 @@ substitutions:
   _REGION: europe-west2
   _REPO: projectongcp
   PROJECT_ID: manssacloudgcp
+
 logsBucket: gs://myservices-logs
 
 steps:
@@ -12,7 +13,7 @@ steps:
     args:
       - build
       - '-t'
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/frontend:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/frontend:$SHORT_SHA'
       - './src/frontend'
       #######SCAN IMAGE################
   - name: 'aquasec/trivy'
@@ -22,21 +23,21 @@ steps:
       - 'CRITICAL,HIGH'
       - '--exit-code'
       - '1'
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/frontend:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/frontend:$SHORT_SHA'
 
 ##################PUSH D'IMAGE###################
   - name: 'gcr.io/cloud-builders/docker'
     id: 'push-frontend'
     args:
       - push
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/frontend:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/frontend:$SHORT_SHA'
 ##################BUILD IMAGE########################
   - name: 'gcr.io/cloud-builders/docker'
     id: 'build-adservice'
     args:
       - build
       - '-t'
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/adservice:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/adservice:$SHORT_SHA'
       - './src/adservice'
 #################SCAN TRIVY##################""
   - name: 'aquasec/trivy'
@@ -46,20 +47,20 @@ steps:
       - 'CRITICAL,HIGH'
       - '--exit-code'
       - '1'
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/adservice:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/adservice:$SHORT_SHA'
 
   - name: 'gcr.io/cloud-builders/docker'
     id: 'push-adservice'
     args:
       - push
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/adservice:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/adservice:$SHORT_SHA'
 ################3
   - name: 'gcr.io/cloud-builders/docker'
     id: 'build-cartservice'
     args:
       - build
       - '-t'
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/cartservice:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/cartservice:$SHORT_SHA'
       - './src/cartservice'
 
   - name: 'aquasec/trivy'
@@ -69,20 +70,20 @@ steps:
       - 'CRITICAL,HIGH'
       - '--exit-code'
       - '1'
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/cartservice:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/cartservice:$SHORT_SHA'
 
   - name: 'gcr.io/cloud-builders/docker'
     id: 'push-cartservice'
     args:
       - push
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/cartservice:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/cartservice:$SHORT_SHA'
       ###############################
   - name: 'gcr.io/cloud-builders/docker'
     id: 'build-checkoutservice'
     args:
       - build
       - '-t'
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/checkoutservice:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/checkoutservice:$SHORT_SHA'
       - './src/checkoutservice'
 
   - name: 'aquasec/trivy'
@@ -92,13 +93,13 @@ steps:
       - 'CRITICAL,HIGH'
       - '--exit-code'
       - '1'
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/checkoutservice:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/checkoutservice:$SHORT_SHA'
 
   - name: 'gcr.io/cloud-builders/docker'
     id: 'push-checkoutservice'
     args:
       - push
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/checkoutservice:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/checkoutservice:$SHORT_SHA'
       ##################################""
     ###############################
   - name: 'gcr.io/cloud-builders/docker'
@@ -106,7 +107,7 @@ steps:
     args:
       - build
       - '-t'
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/currencyservice:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/currencyservice:$SHORT_SHA'
       - './src/currencyservice'
 
   - name: 'aquasec/trivy'
@@ -116,13 +117,13 @@ steps:
       - 'CRITICAL,HIGH'
       - '--exit-code'
       - '1'
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/currencyservice:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/currencyservice:$SHORT_SHA'
 
   - name: 'gcr.io/cloud-builders/docker'
     id: 'push-currencyservice'
     args:
       - push
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/currencyservice:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/currencyservice:$SHORT_SHA'
       ##################################""
     ###############################
   - name: 'gcr.io/cloud-builders/docker'
@@ -130,7 +131,7 @@ steps:
     args:
       - build
       - '-t'
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/emailservice:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/emailservice:$SHORT_SHA'
       - './src/emailservice'
 
   - name: 'aquasec/trivy'
@@ -140,20 +141,20 @@ steps:
       - 'CRITICAL,HIGH'
       - '--exit-code'
       - '1'
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/emailservice:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/emailservice:$SHORT_SHA'
 
   - name: 'gcr.io/cloud-builders/docker'
     id: 'push-emailservice'
     args:
       - push
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/emailservice:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/emailservice:$SHORT_SHA'
       ##################################""
   - name: 'gcr.io/cloud-builders/docker'
     id: 'build-loadgenerator'
     args:
       - build
       - '-t'
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/loadgenerator:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/loadgenerator:$SHORT_SHA'
       - './src/loadgenerator'
 
   - name: 'aquasec/trivy'
@@ -163,20 +164,20 @@ steps:
       - 'CRITICAL,HIGH'
       - '--exit-code'
       - '1'
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/loadgenerator:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/loadgenerator:$SHORT_SHA'
 
   - name: 'gcr.io/cloud-builders/docker'
     id: 'push-loadgenerator'
     args:
       - push
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/loadgenerator:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/loadgenerator:$SHORT_SHA'
          ##################################""
   - name: 'gcr.io/cloud-builders/docker'
     id: 'build-paymentservice'
     args:
       - build
       - '-t'
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/paymentservice:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/paymentservice:$SHORT_SHA'
       - './src/paymentservice'
 
   - name: 'aquasec/trivy'
@@ -186,20 +187,20 @@ steps:
       - 'CRITICAL,HIGH'
       - '--exit-code'
       - '1'
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/paymentservice:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/paymentservice:$SHORT_SHA'
 
   - name: 'gcr.io/cloud-builders/docker'
     id: 'push-paymentservice'
     args:
       - push
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/paymentservice:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/paymentservice:$SHORT_SHA'
        ##################################""
   - name: 'gcr.io/cloud-builders/docker'
     id: 'build-productcatalogservice'
     args:
       - build
       - '-t'
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/productcatalogservice:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/productcatalogservice:$SHORT_SHA'
       - './src/productcatalogservice'
 
   - name: 'aquasec/trivy'
@@ -209,20 +210,20 @@ steps:
       - 'CRITICAL,HIGH'
       - '--exit-code'
       - '1'
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/productcatalogservice:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/productcatalogservice:$SHORT_SHA'
 
   - name: 'gcr.io/cloud-builders/docker'
     id: 'push-productcatalogservice'
     args:
       - push
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/productcatalogservice:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/productcatalogservice:$SHORT_SHA'
        ##################################""
   - name: 'gcr.io/cloud-builders/docker'
     id: 'build-recommendationservice'
     args:
       - build
       - '-t'
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/recommendationservice:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/recommendationservice:$SHORT_SHA'
       - './src/recommendationservice'
 
   - name: 'aquasec/trivy'
@@ -232,20 +233,20 @@ steps:
       - 'CRITICAL,HIGH'
       - '--exit-code'
       - '1'
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/recommendationservice:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/recommendationservice:$SHORT_SHA'
 
   - name: 'gcr.io/cloud-builders/docker'
     id: 'push-recommendationservice'
     args:
       - push
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/recommendationservice:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/recommendationservice:$SHORT_SHA'
          ##################################""
   - name: 'gcr.io/cloud-builders/docker'
     id: 'build-shippingservice'
     args:
       - build
       - '-t'
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/shippingservice:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/shippingservice:$SHORT_SHA'
       - './src/shippingservice'
 
   - name: 'aquasec/trivy'
@@ -255,20 +256,20 @@ steps:
       - 'CRITICAL,HIGH'
       - '--exit-code'
       - '1'
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/shippingservice:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/shippingservice:$SHORT_SHA'
 
   - name: 'gcr.io/cloud-builders/docker'
     id: 'push-shippingservice'
     args:
       - push
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/shippingservice:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/shippingservice:$SHORT_SHA'
            ##################################""
   - name: 'gcr.io/cloud-builders/docker'
     id: 'build-paymentservice'
     args:
       - build
       - '-t'
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/paymentservice:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/paymentservice:$SHORT_SHA'
       - './src/paymentservice'
 
   - name: 'aquasec/trivy'
@@ -278,10 +279,10 @@ steps:
       - 'CRITICAL,HIGH'
       - '--exit-code'
       - '1'
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/paymentservice:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/paymentservice:$SHORT_SHA'
 
   - name: 'gcr.io/cloud-builders/docker'
     id: 'push-paymentservice'
     args:
       - push
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/paymentservice:$SHORT_SHA'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/paymentservice:$SHORT_SHA'
