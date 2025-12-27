@@ -4,7 +4,10 @@ substitutions:
   _REPO: projectongcp
   _PROJECT_ID: manssacloudgcp
 
-logsBucket: gs://myservices-logs
+serviceAccount: projects/manssacloudgcp/serviceAccounts/github-ci@manssacloudgcp.iam.gserviceaccount.com
+#logsBucket: gs://myservices-logs
+options:
+  logging: CLOUD_LOGGING_ONLY
 
 steps:
 #########BUILD iMAGE################
