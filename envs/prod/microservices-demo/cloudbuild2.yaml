@@ -5,7 +5,7 @@ substitutions:
   _PROJECT_ID: manssacloudgcp
 ######################
 serviceAccount: projects/manssacloudgcp/serviceAccounts/github-ci@manssacloudgcp.iam.gserviceaccount.com
-logsBucket: gs://myservices-logs
+#logsBucket: gs://myservices-logs
 options:
   logging: CLOUD_LOGGING_ONLY
 
