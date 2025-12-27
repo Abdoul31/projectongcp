@@ -15,8 +15,6 @@ steps:
     id: 'build-frontend'
     args:
       - build
-      - --build-arg
-      - BUILDPLATFORM=linux/amd64
       - '-t'
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/frontend:$SHORT_SHA'
       - 'envs/prod/microservices-demo/src/frontend'
@@ -41,8 +39,6 @@ steps:
     id: 'build-adservice'
     args:
       - build
-      - --build-arg
-      - BUILDPLATFORM=linux/amd64
       - '-t'
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/adservice:$SHORT_SHA'
       - 'envs/prod/microservices-demo/src/adservice'
@@ -66,8 +62,6 @@ steps:
     id: 'build-cartservice'
     args:
       - build
-      - --build-arg
-      - BUILDPLATFORM=linux/amd64
       - '-t'
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/cartservice:$SHORT_SHA'
       - 'envs/prod/microservices-demo/src/cartservice'
@@ -91,8 +85,6 @@ steps:
     id: 'build-checkoutservice'
     args:
       - build
-      - --build-arg
-      - BUILDPLATFORM=linux/amd64
       - '-t'
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/checkoutservice:$SHORT_SHA'
       - 'envs/prod/microservices-demo/src/checkoutservice'
@@ -117,8 +109,6 @@ steps:
     id: 'build-currencyservice'
     args:
       - build
-      - --build-arg
-      - BUILDPLATFORM=linux/amd64
       - '-t'
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/currencyservice:$SHORT_SHA'
       - 'envs/prod/microservices-demo/src/currencyservice'
@@ -142,8 +132,6 @@ steps:
     id: 'build-emailservice'
     args:
       - build
-      - --build-arg
-      - BUILDPLATFORM=linux/amd64
       - '-t'
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/emailservice:$SHORT_SHA'
       - 'envs/prod/microservices-demo/src/emailservice'
@@ -167,8 +155,6 @@ steps:
     id: 'build-loadgenerator'
     args:
       - build
-      - --build-arg
-      - BUILDPLATFORM=linux/amd64
       - '-t'
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/loadgenerator:$SHORT_SHA'
       - 'envs/prod/microservices-demo/src/loadgenerator'
@@ -192,8 +178,6 @@ steps:
     id: 'build-paymentservice'
     args:
       - build
-      - --build-arg
-      - BUILDPLATFORM=linux/amd64
       - '-t'
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/paymentservice:$SHORT_SHA'
       - 'envs/prod/microservices-demo/src/paymentservice'
@@ -217,8 +201,6 @@ steps:
     id: 'build-productcatalogservice'
     args:
       - build
-      - --build-arg
-      - BUILDPLATFORM=linux/amd64
       - '-t'
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/productcatalogservice:$SHORT_SHA'
       - 'envs/prod/microservices-demo/src/productcatalogservice'
@@ -242,8 +224,6 @@ steps:
     id: 'build-recommendationservice'
     args:
       - build
-      - --build-arg
-      - BUILDPLATFORM=linux/amd64
       - '-t'
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/recommendationservice:$SHORT_SHA'
       - 'envs/prod/microservices-demo/src/recommendationservice'
@@ -267,8 +247,6 @@ steps:
     id: 'build-shippingservice'
     args:
       - build
-      - --build-arg
-      - BUILDPLATFORM=linux/amd64
       - '-t'
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/shippingservice:$SHORT_SHA'
       - 'envs/prod/microservices-demo/src/shippingservice'
