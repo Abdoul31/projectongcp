@@ -17,7 +17,7 @@ steps:
       - build
       - '-t'
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/frontend:$SHORT_SHA'
-      - './src/frontend'
+      - 'src/frontend'
       #######SCAN IMAGE################
   - name: 'aquasec/trivy'
     args:
@@ -41,7 +41,7 @@ steps:
       - build
       - '-t'
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/adservice:$SHORT_SHA'
-      - './src/adservice'
+      - 'src/adservice'
 #################SCAN TRIVY##################""
   - name: 'aquasec/trivy'
     args:
@@ -64,7 +64,7 @@ steps:
       - build
       - '-t'
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/cartservice:$SHORT_SHA'
-      - './src/cartservice'
+      - 'src/cartservice'
 
   - name: 'aquasec/trivy'
     args:
@@ -87,7 +87,7 @@ steps:
       - build
       - '-t'
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/checkoutservice:$SHORT_SHA'
-      - './src/checkoutservice'
+      - 'src/checkoutservice'
 
   - name: 'aquasec/trivy'
     args:
@@ -111,7 +111,7 @@ steps:
       - build
       - '-t'
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/currencyservice:$SHORT_SHA'
-      - './src/currencyservice'
+      - 'src/currencyservice'
 
   - name: 'aquasec/trivy'
     args:
@@ -134,7 +134,7 @@ steps:
       - build
       - '-t'
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/emailservice:$SHORT_SHA'
-      - './src/emailservice'
+      - 'src/emailservice'
 
   - name: 'aquasec/trivy'
     args:
@@ -157,7 +157,7 @@ steps:
       - build
       - '-t'
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/loadgenerator:$SHORT_SHA'
-      - './src/loadgenerator'
+      - 'src/loadgenerator'
 
   - name: 'aquasec/trivy'
     args:
@@ -180,7 +180,7 @@ steps:
       - build
       - '-t'
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/paymentservice:$SHORT_SHA'
-      - './src/paymentservice'
+      - 'src/paymentservice'
 
   - name: 'aquasec/trivy'
     args:
@@ -203,7 +203,7 @@ steps:
       - build
       - '-t'
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/productcatalogservice:$SHORT_SHA'
-      - './src/productcatalogservice'
+      - 'src/productcatalogservice'
 
   - name: 'aquasec/trivy'
     args:
@@ -226,7 +226,7 @@ steps:
       - build
       - '-t'
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/recommendationservice:$SHORT_SHA'
-      - './src/recommendationservice'
+      - 'src/recommendationservice'
 
   - name: 'aquasec/trivy'
     args:
@@ -249,7 +249,7 @@ steps:
       - build
       - '-t'
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/shippingservice:$SHORT_SHA'
-      - './src/shippingservice'
+      - 'src/shippingservice'
 
   - name: 'aquasec/trivy'
     args:
