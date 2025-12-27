@@ -3,7 +3,7 @@ substitutions:
   _REGION: europe-west2
   _REPO: projectongcp
   _PROJECT_ID: manssacloudgcp
-
+######################
 serviceAccount: projects/manssacloudgcp/serviceAccounts/github-ci@manssacloudgcp.iam.gserviceaccount.com
 logsBucket: gs://myservices-logs
 options:
