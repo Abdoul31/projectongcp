@@ -12,26 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# ===== Builder (Debian-based) =====
+FROM eclipse-temurin:25-jdk-noble AS builder
 
+WORKDIR /app
 
-# FROM eclipse-temurin:25-jdk-noble AS builder
+COPY ["build.gradle", "gradlew", "./"]
+COPY gradle gradle
+RUN chmod +x gradlew
+RUN ./gradlew downloadRepos
 
-# RUN apt-get update && apt-get upgrade -y && rm -rf /var/lib/apt/lists/*
+COPY . .
+RUN chmod +x gradlew
+RUN ./gradlew installDist
 
-# WORKDIR /app
-
-# COPY ["build.gradle", "gradlew", "./"]
-# COPY gradle gradle
-# RUN chmod +x gradlew
-# RUN ./gradlew downloadRepos
-
-# COPY . .
-# RUN chmod +x gradlew
-# RUN ./gradlew installDist
-
-# FROM eclipse-temurin:25.0.1_8-jre-alpine@sha256:b51543f89580c1ba70e441cfbc0cfc1635c3c16d2e2d77fec9d890342a3a8687
-
+FROM eclipse-temurin:25.0.1_8-jre-alpine@sha256:b51543f89580c1ba70e441cfbc0cfc1635c3c16d2e2d77fec9d890342a3a8687
 
 # @TODO: https://github.com/GoogleCloudPlatform/microservices-demo/issues/2517
 # Download Stackdriver Profiler Java agent
@@ -40,37 +34,8 @@
 #     | tar xzv -C /opt/cprof && \
 #     rm -rf profiler_java_agent.tar.gz
 
-# WORKDIR /app
-# COPY --from=builder /app .
-
-# EXPOSE 9555
-# ENTRYPOINT ["/app/build/install/hipstershop/bin/AdService"]
-
-FROM eclipse-temurin:25-jdk-noble AS builder
-
-# Vérifier ce qui est disponible
-RUN which curl || apt-get update && apt-get install -y curl unzip
-
-WORKDIR /app
-
-ENV GRADLE_VERSION=8.7
-# Utiliser curl si disponible
-RUN (curl -L https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip -o gradle.zip || \
-     (apt-get update && apt-get install -y wget && wget https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip -O gradle.zip)) && \
-    unzip gradle.zip && \
-    mv gradle-${GRADLE_VERSION} /opt/gradle && \
-    rm gradle.zip
-
-ENV PATH="/opt/gradle/bin:${PATH}"
-
-COPY ["build.gradle", "gradlew", "./"]
-COPY gradle gradle
-RUN chmod +x gradlew
-#RUN ./gradlew downloadRepos --stacktrace --info --no-daemon
-COPY . .
-RUN ./gradlew installDist --stacktrace --no-daemon
-FROM eclipse-temurin:25.0.1_8-jre-alpine@sha256:b51543f89580c1ba70e441cfbc0cfc1635c3c16d2e2d77fec9d890342a3a8687
 WORKDIR /app
 COPY --from=builder /app .
+
 EXPOSE 9555
 ENTRYPOINT ["/app/build/install/hipstershop/bin/AdService"]
