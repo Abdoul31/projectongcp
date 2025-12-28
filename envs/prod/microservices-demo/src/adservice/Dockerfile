@@ -13,15 +13,15 @@
 # limitations under the License.
 
 # ===== Builder (Debian-based) =====
+
+
 FROM eclipse-temurin:25.0.1_8-jdk-noble AS builder
 
-RUN apt-get update \
- && apt-get upgrade -y \
- && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get upgrade -y && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-COPY build.gradle gradlew ./
+COPY ["build.gradle", "gradlew", "./"]
 COPY gradle gradle
 RUN chmod +x gradlew
 RUN ./gradlew downloadRepos
@@ -30,32 +30,7 @@ COPY . .
 RUN chmod +x gradlew
 RUN ./gradlew installDist
 
-# ===== Runtime (Alpine) =====
 FROM eclipse-temurin:25.0.1_8-jre-alpine@sha256:b51543f89580c1ba70e441cfbc0cfc1635c3c16d2e2d77fec9d890342a3a8687
-
-WORKDIR /app
-COPY --from=builder /app .
-
-EXPOSE 9555
-ENTRYPOINT ["/app/build/install/hipstershop/bin/AdService"]
-
-
-# FROM eclipse-temurin:21.0.9_10-jdk-noble AS builder
-
-# RUN apt-get update && apt-get upgrade -y && rm -rf /var/lib/apt/lists/*
-
-# WORKDIR /app
-
-# COPY ["build.gradle", "gradlew", "./"]
-# COPY gradle gradle
-# RUN chmod +x gradlew
-# RUN ./gradlew downloadRepos
-
-# COPY . .
-# RUN chmod +x gradlew
-# RUN ./gradlew installDist
-
-# FROM eclipse-temurin:25.0.1_8-jre-alpine@sha256:b51543f89580c1ba70e441cfbc0cfc1635c3c16d2e2d77fec9d890342a3a8687
 
 # @TODO: https://github.com/GoogleCloudPlatform/microservices-demo/issues/2517
 # Download Stackdriver Profiler Java agent
