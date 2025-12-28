@@ -48,30 +48,24 @@
 
 FROM eclipse-temurin:25-jdk-noble AS builder
 
-# Installer wget et unzip
-RUN apt-get update && apt-get install -y wget unzip && rm -rf /var/lib/apt/lists/*
+# Vérifier ce qui est disponible
+RUN which curl || apt-get update && apt-get install -y curl unzip
 
 WORKDIR /app
 
-# Utiliser une version récente de Gradle compatible Java 21
 ENV GRADLE_VERSION=8.7
-RUN wget https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip && \
-    unzip gradle-${GRADLE_VERSION}-bin.zip && \
+# Utiliser curl si disponible
+RUN (curl -L https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip -o gradle.zip || \
+     (apt-get update && apt-get install -y wget && wget https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip -O gradle.zip)) && \
+    unzip gradle.zip && \
     mv gradle-${GRADLE_VERSION} /opt/gradle && \
-    rm gradle-${GRADLE_VERSION}-bin.zip
+    rm gradle.zip
 
 ENV PATH="/opt/gradle/bin:${PATH}"
 
 COPY ["build.gradle", "gradlew", "./"]
 COPY gradle gradle
 RUN chmod +x gradlew
-
-# Vérifier les versions
-RUN java -version && gradle --version
-
-# Mettre à jour le wrapper si nécessaire
-RUN gradle wrapper --gradle-version=${GRADLE_VERSION}
-
 RUN ./gradlew downloadRepos
 
 COPY . .
