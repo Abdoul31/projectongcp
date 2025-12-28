@@ -48,7 +48,8 @@
 
 FROM eclipse-temurin:25-jdk-noble AS builder
 
-RUN apt-get update && apt-get upgrade -y && rm -rf /var/lib/apt/lists/*
+# Installer wget et unzip
+RUN apt-get update && apt-get install -y wget unzip && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
@@ -64,6 +65,9 @@ ENV PATH="/opt/gradle/bin:${PATH}"
 COPY ["build.gradle", "gradlew", "./"]
 COPY gradle gradle
 RUN chmod +x gradlew
+
+# Vérifier les versions
+RUN java -version && gradle --version
 
 # Mettre à jour le wrapper si nécessaire
 RUN gradle wrapper --gradle-version=${GRADLE_VERSION}
