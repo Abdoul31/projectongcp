@@ -1,7 +1,7 @@
 
 substitutions:
   _REGION: europe-west2
-  _REPO: projectongcp
+  _REPO: microservices-demo
   _PROJECT_ID: manssacloudgcp
 ######################cloud loging 
 serviceAccount: projects/manssacloudgcp/serviceAccounts/github-ci@manssacloudgcp.iam.gserviceaccount.com
