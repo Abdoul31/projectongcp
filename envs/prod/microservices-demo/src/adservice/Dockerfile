@@ -15,22 +15,22 @@
 # ===== Builder (Debian-based) =====
 
 
-FROM eclipse-temurin:25-jdk-noble AS builder
+# FROM eclipse-temurin:25-jdk-noble AS builder
 
-RUN apt-get update && apt-get upgrade -y && rm -rf /var/lib/apt/lists/*
+# RUN apt-get update && apt-get upgrade -y && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app
+# WORKDIR /app
 
-COPY ["build.gradle", "gradlew", "./"]
-COPY gradle gradle
-RUN chmod +x gradlew
-RUN ./gradlew downloadRepos
+# COPY ["build.gradle", "gradlew", "./"]
+# COPY gradle gradle
+# RUN chmod +x gradlew
+# RUN ./gradlew downloadRepos
 
-COPY . .
-RUN chmod +x gradlew
-RUN ./gradlew installDist
+# COPY . .
+# RUN chmod +x gradlew
+# RUN ./gradlew installDist
 
-FROM eclipse-temurin:25.0.1_8-jre-alpine@sha256:b51543f89580c1ba70e441cfbc0cfc1635c3c16d2e2d77fec9d890342a3a8687
+# FROM eclipse-temurin:25.0.1_8-jre-alpine@sha256:b51543f89580c1ba70e441cfbc0cfc1635c3c16d2e2d77fec9d890342a3a8687
 
 
 # @TODO: https://github.com/GoogleCloudPlatform/microservices-demo/issues/2517
@@ -40,8 +40,41 @@ FROM eclipse-temurin:25.0.1_8-jre-alpine@sha256:b51543f89580c1ba70e441cfbc0cfc16
 #     | tar xzv -C /opt/cprof && \
 #     rm -rf profiler_java_agent.tar.gz
 
+# WORKDIR /app
+# COPY --from=builder /app .
+
+# EXPOSE 9555
+# ENTRYPOINT ["/app/build/install/hipstershop/bin/AdService"]
+
+FROM eclipse-temurin:25-jdk-noble AS builder
+
+RUN apt-get update && apt-get upgrade -y && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Utiliser une version récente de Gradle compatible Java 21
+ENV GRADLE_VERSION=8.7
+RUN wget https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip && \
+    unzip gradle-${GRADLE_VERSION}-bin.zip && \
+    mv gradle-${GRADLE_VERSION} /opt/gradle && \
+    rm gradle-${GRADLE_VERSION}-bin.zip
+
+ENV PATH="/opt/gradle/bin:${PATH}"
+
+COPY ["build.gradle", "gradlew", "./"]
+COPY gradle gradle
+RUN chmod +x gradlew
+
+# Mettre à jour le wrapper si nécessaire
+RUN gradle wrapper --gradle-version=${GRADLE_VERSION}
+
+RUN ./gradlew downloadRepos
+
+COPY . .
+RUN ./gradlew installDist
+
+FROM eclipse-temurin:25.0.1_8-jre-alpine@sha256:b51543f89580c1ba70e441cfbc0cfc1635c3c16d2e2d77fec9d890342a3a8687
 WORKDIR /app
 COPY --from=builder /app .
-
 EXPOSE 9555
 ENTRYPOINT ["/app/build/install/hipstershop/bin/AdService"]
