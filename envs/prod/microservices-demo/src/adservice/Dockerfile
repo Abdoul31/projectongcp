@@ -32,6 +32,7 @@ RUN ./gradlew installDist
 
 FROM eclipse-temurin:25.0.1_8-jre-alpine@sha256:b51543f89580c1ba70e441cfbc0cfc1635c3c16d2e2d77fec9d890342a3a8687
 
+
 # @TODO: https://github.com/GoogleCloudPlatform/microservices-demo/issues/2517
 # Download Stackdriver Profiler Java agent
 # RUN mkdir -p /opt/cprof && \
@@ -39,8 +40,8 @@ FROM eclipse-temurin:25.0.1_8-jre-alpine@sha256:b51543f89580c1ba70e441cfbc0cfc16
 #     | tar xzv -C /opt/cprof && \
 #     rm -rf profiler_java_agent.tar.gz
 
-# WORKDIR /app
-# COPY --from=builder /app .
+WORKDIR /app
+COPY --from=builder /app .
 
-# EXPOSE 9555
-# ENTRYPOINT ["/app/build/install/hipstershop/bin/AdService"]
+EXPOSE 9555
+ENTRYPOINT ["/app/build/install/hipstershop/bin/AdService"]
