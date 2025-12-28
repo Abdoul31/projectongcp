@@ -14,7 +14,7 @@
 
 FROM eclipse-temurin:21.0.9_10-jdk-noble AS builder
 
-RUN RUN apt-get update && apt-get upgrade -y && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get upgrade -y && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
