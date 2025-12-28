@@ -13,7 +13,7 @@
 # limitations under the License.
 
 # ===== Builder (Debian-based) =====
-FROM eclipse-temurin:21.0.9_10-jdk-noble AS builder
+FROM eclipse-temurin:25.0.1_8-jdk-noble AS builder
 
 RUN apt-get update \
  && apt-get upgrade -y \
