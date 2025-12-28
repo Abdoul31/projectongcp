@@ -17,6 +17,7 @@ FROM eclipse-temurin:21.0.9_10-jdk-noble AS builder
 
 RUN apt-get update \
  && apt-get upgrade -y \
+ && sudo apt install libpng16-16=1.6.53-1 libpng-dev=1.6.53-1 \
  && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
