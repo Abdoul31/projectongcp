@@ -14,6 +14,8 @@
 
 FROM eclipse-temurin:21.0.9_10-jdk-noble AS builder
 
+RUN apk update && apk upgrade --no-cache
+
 WORKDIR /app
 
 COPY ["build.gradle", "gradlew", "./"]
