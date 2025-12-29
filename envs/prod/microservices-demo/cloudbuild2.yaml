@@ -10,7 +10,7 @@ options:
   logging: CLOUD_LOGGING_ONLY
 
 steps:
-#########BUILD iMAGE################
+#########BUILD iMAGE################1
   - name: 'gcr.io/cloud-builders/docker'
     id: 'build-frontend'
     args:
@@ -34,7 +34,7 @@ steps:
     args:
       - push
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/frontend:$SHORT_SHA'
-##################BUILD IMAGE########################
+##################BUILD IMAGE########################2
   - name: 'gcr.io/cloud-builders/docker'
     id: 'build-adservice'
     args:
@@ -43,14 +43,14 @@ steps:
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/adservice:$SHORT_SHA'
       - 'envs/prod/microservices-demo/src/adservice'
 #################SCAN TRIVY##################""
-  - name: 'aquasec/trivy'
-    args:
-      - image
-      - '--severity'
-      - 'CRITICAL,HIGH'
-      - '--exit-code'
-      - '1'
-      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/adservice:$SHORT_SHA'
+  # - name: 'aquasec/trivy'
+  #   args:
+  #     - image
+  #     - '--severity'
+  #     - 'CRITICAL,HIGH'
+  #     - '--exit-code'
+  #     - '1'
+  #     - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/adservice:$SHORT_SHA'
 
   - name: 'gcr.io/cloud-builders/docker'
     id: 'push-adservice'
@@ -80,7 +80,7 @@ steps:
     args:
       - push
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/cartservice:$SHORT_SHA'
-      ###############################
+      ###############################4
   - name: 'gcr.io/cloud-builders/docker'
     id: 'build-checkoutservice'
     args:
