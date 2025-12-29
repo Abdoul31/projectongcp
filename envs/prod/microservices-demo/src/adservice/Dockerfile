@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM eclipse-temurin:25-jdk-noble AS builder
+FROM eclipse-temurin:25-jdk-noble@sha256:e2ba4c84f2356d829837f561e171482f5121d75e537e8fe04e91fb4381694641 AS builder
 
 WORKDIR /app
 
 COPY ["build.gradle", "gradlew", "./"]
 COPY gradle gradle
 RUN chmod +x gradlew
-#RUN ./gradlew downloadRepos
+RUN ./gradlew downloadRepos
 
 COPY . .
 RUN chmod +x gradlew
