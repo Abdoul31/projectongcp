@@ -26,7 +26,8 @@ RUN dotnet publish cartservice.csproj \
     --self-contained true \
     -p:PublishTrimmed=true \
     -p:TrimMode=full \
-    -c release \
+    -c release \ 
+    -f \
     -o /cartservice
 
 # https://mcr.microsoft.com/product/dotnet/runtime-deps
