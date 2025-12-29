@@ -64,7 +64,8 @@ steps:
       - build
       - '-t'
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/cartservice:$SHORT_SHA'
-      - 'envs/prod/microservices-demo/src/cartservice'
+      #- 'envs/prod/microservices-demo/src/cartservice'
+      - envs/prod/microservices-demo/src/cartservice/src/
 
   - name: 'aquasec/trivy'
     args:
