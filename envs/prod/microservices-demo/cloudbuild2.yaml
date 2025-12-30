@@ -58,14 +58,16 @@ steps:
       - push
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/adservice:$SHORT_SHA'
 ################3
+  - steps:
   - name: 'gcr.io/cloud-builders/docker'
+    args: ['build',
+          '--build-arg', 'TARGETARCH=amd64',  # Définir explicitement
+          '-t', 'gcr.io/$PROJECT_ID/cartservice:$COMMIT_SHA',
+          '-f', 'src/cartservice/Dockerfile',
+          '.']
+    dir: 'envs/prod/microservices-demo/src/cartservice/src/'
     id: 'build-cartservice'
-    args:
-      - build
-      - '-t'
-      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/cartservice:$SHORT_SHA'
-      #- 'envs/prod/microservices-demo/src/cartservice'
-      - envs/prod/microservices-demo/src/cartservice/src/
+      
 
   - name: 'aquasec/trivy'
     args:
