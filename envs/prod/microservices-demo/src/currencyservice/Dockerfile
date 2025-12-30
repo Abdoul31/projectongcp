@@ -12,31 +12,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM node:22.21.1-alpine AS builder
-
-RUN apk add --update --no-cache \
-    python3 \
-    make \
-    g++ \
-    git
+# Abandonner Alpine, utiliser une stack complète
+FROM node:22.21.1-bullseye-slim AS builder
 
 WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-# Installer sans pprof si c'est optionnel
-RUN npm install --only=production --omit=dev --no-optional
+# Pas besoin de dépendances de build supplémentaires
+RUN npm install --only=production --omit=dev
 
-FROM alpine:3.22.2
-
-RUN apk add --no-cache nodejs
+FROM node:22.21.1-bullseye-slim
 
 WORKDIR /usr/src/app
 
 COPY --from=builder /usr/src/app/node_modules ./node_modules
-
 COPY . .
 
 EXPOSE 7000
+
+USER node
 
 ENTRYPOINT [ "node", "server.js" ]
