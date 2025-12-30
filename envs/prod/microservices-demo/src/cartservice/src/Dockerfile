@@ -18,7 +18,7 @@ ARG TARGETARCH
 WORKDIR /app
 COPY cartservice.csproj .
 RUN dotnet restore cartservice.csproj \
-    #-a $TARGETARCH
+    -a $TARGETARCH
 COPY . .
 RUN dotnet publish cartservice.csproj \
     -p:PublishSingleFile=true \
@@ -26,7 +26,7 @@ RUN dotnet publish cartservice.csproj \
     --self-contained true \
     -p:PublishTrimmed=true \
     -p:TrimMode=full \
-    -c -f release \ 
+    -c release \ 
     -o /cartservice
 
 # https://mcr.microsoft.com/product/dotnet/runtime-deps
