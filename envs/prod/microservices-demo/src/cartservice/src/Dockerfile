@@ -14,30 +14,17 @@
 
 # https://mcr.microsoft.com/product/dotnet/sdk
 FROM mcr.microsoft.com/dotnet/sdk:10.0.100-noble AS builder
-ARG TARGETARCH
+ARG TARGETARCH=amd64  # Valeur par défaut
 WORKDIR /app
 
 COPY cartservice.csproj .
-
-# Debug: voir l'architecture
-RUN echo "Target ARCH: $TARGETARCH"
-RUN dotnet --info
-
-# Restaurer avec architecture explicite
-RUN if [ "$TARGETARCH" = "amd64" ]; then \
-    dotnet restore cartservice.csproj -r linux-x64; \
-    elif [ "$TARGETARCH" = "arm64" ]; then \
-    dotnet restore cartservice.csproj -r linux-arm64; \
-    else \
-    dotnet restore cartservice.csproj; \
-    fi
+RUN dotnet restore cartservice.csproj \
+    --runtime linux-$TARGETARCH
 
 COPY . .
 RUN dotnet publish cartservice.csproj \
     -p:PublishSingleFile=true \
     -r linux-$TARGETARCH \
     --self-contained true \
-    -p:PublishTrimmed=true \
-    -p:TrimMode=full \
     -c release \
     -o /cartservice
