@@ -12,24 +12,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Utiliser l'image Debian au lieu d'Alpine
-FROM node:22.21.1-slim AS builder
+FROM node:22.21.1-alpine AS builder
 
-# Installer les dépendances de build
-RUN apt-get update && apt-get install -y \
+RUN apk add --update --no-cache \
     python3 \
     make \
     g++ \
-    git \
-    && rm -rf /var/lib/apt/lists/*
+    git
 
 WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm ci --only=production --omit=dev
+# Installer sans pprof si c'est optionnel
+RUN npm install --only=production --omit=dev --no-optional
 
-FROM node:22.21.1-slim
+FROM alpine:3.22.2
+
+RUN apk add --no-cache nodejs
 
 WORKDIR /usr/src/app
 
