@@ -12,20 +12,29 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Utiliser node:slim au lieu d'alpine
-FROM node:22-slim AS builder
+# Utiliser l'image Debian au lieu d'Alpine
+FROM node:22.21.1-slim AS builder
+
+# Installer les dépendances de build
+RUN apt-get update && apt-get install -y \
+    python3 \
+    make \
+    g++ \
+    git \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm install --only=production --omit=dev
+RUN npm ci --only=production --omit=dev
 
-FROM node:22-slim
+FROM node:22.21.1-slim
 
 WORKDIR /usr/src/app
 
 COPY --from=builder /usr/src/app/node_modules ./node_modules
+
 COPY . .
 
 EXPOSE 7000
