@@ -22,7 +22,7 @@ RUN dotnet restore cartservice.csproj \
 COPY . .
 RUN dotnet publish cartservice.csproj \
     -p:PublishSingleFile=true \
-    -a $TARGETARCH \
+    #-a $TARGETARCH \
     --self-contained true \
     -p:PublishTrimmed=true \
     -p:TrimMode=full \
