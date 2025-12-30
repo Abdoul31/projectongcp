@@ -12,17 +12,31 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Abandonner Alpine, utiliser une stack complète
-FROM node:22.21.1-bullseye-slim AS builder
+FROM node:22.21.1-alpine AS builder
+
+# Installer toutes les dépendances nécessaires
+RUN apk add --update --no-cache \
+    python3 \
+    make \
+    g++ \
+    git \
+    linux-headers \
+    libc6-compat \
+    && ln -sf python3 /usr/bin/python
 
 WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-# Pas besoin de dépendances de build supplémentaires
-RUN npm install --only=production --omit=dev
+# Installer pprof séparément avec des flags spécifiques
+RUN npm install --only=production --omit=dev --ignore-scripts
+RUN cd node_modules/pprof && \
+    npm config set python /usr/bin/python3 && \
+    npm run install --build-from-source
 
-FROM node:22.21.1-bullseye-slim
+FROM alpine:3.22.2
+
+RUN apk add --no-cache nodejs
 
 WORKDIR /usr/src/app
 
@@ -30,7 +44,3 @@ COPY --from=builder /usr/src/app/node_modules ./node_modules
 COPY . .
 
 EXPOSE 7000
-
-USER node
-
-ENTRYPOINT [ "node", "server.js" ]
