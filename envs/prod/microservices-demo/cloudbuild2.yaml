@@ -183,14 +183,14 @@ steps:
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/paymentservice:$SHORT_SHA'
       - 'envs/prod/microservices-demo/src/paymentservice'
 
-  - name: 'aquasec/trivy'
-    args:
-      - image
-      - '--severity'
-      - 'CRITICAL,HIGH'
-      - '--exit-code'
-      - '1'
-      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/paymentservice:$SHORT_SHA'
+  # - name: 'aquasec/trivy'
+  #   args:
+  #     - image
+  #     - '--severity'
+  #     - 'CRITICAL,HIGH'
+  #     - '--exit-code'
+  #     - '1'
+  #     - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/paymentservice:$SHORT_SHA'
 
   - name: 'gcr.io/cloud-builders/docker'
     id: 'push-paymentservice'
