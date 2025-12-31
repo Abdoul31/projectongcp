@@ -14,25 +14,18 @@
 
 FROM node:22.21.1-alpine AS builder
 
-# Installer toutes les dépendances nécessaires
 RUN apk add --update --no-cache \
     python3 \
     make \
-    g++ \
-    git \
-    linux-headers \
-    libc6-compat \
-    && ln -sf python3 /usr/bin/python
+    g++
 
 WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-# Installer pprof séparément avec des flags spécifiques
+# 完全跳过 pprof
 RUN npm install --only=production --omit=dev --ignore-scripts
-RUN cd node_modules/pprof && \
-    npm config set python /usr/bin/python3 && \
-    npm run install --build-from-source
+RUN npm uninstall pprof @google-cloud/profiler --no-save || true
 
 FROM alpine:3.22.2
 
@@ -44,3 +37,5 @@ COPY --from=builder /usr/src/app/node_modules ./node_modules
 COPY . .
 
 EXPOSE 7000
+
+ENTRYPOINT [ "node", "server.js" ]
