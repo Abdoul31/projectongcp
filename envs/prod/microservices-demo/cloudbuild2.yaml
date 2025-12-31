@@ -237,6 +237,8 @@ steps:
       - '--exit-code'
       - '1'
       - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/recommendationservice:$SHORT_SHA'
+  ### protobuf vulnerabilité  CVE-2025-4565 severité élévé fixé version 4.25.8
+  ###urllib3  vulnerabilité  CVE-2025-66418  fixé version 2.6.0
 
   - name: 'gcr.io/cloud-builders/docker'
     id: 'push-recommendationservice'

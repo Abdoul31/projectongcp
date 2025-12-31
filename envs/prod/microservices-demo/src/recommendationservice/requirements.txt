@@ -86,7 +86,8 @@ opentelemetry-semantic-conventions==0.41b0
     # via
     #   opentelemetry-instrumentation-grpc
     #   opentelemetry-sdk
-protobuf==4.25.0
+#changement de version vulnerabilité CVE-2025-4565  │ HIGH     │ fixed  │ 4.25.0            │ 4.25.8
+protobuf==4.25.8
     # via
     #   google-api-core
     #   google-cloud-profiler
@@ -116,7 +117,8 @@ typing-extensions==4.8.0
     # via opentelemetry-sdk
 uritemplate==4.1.1
     # via google-api-python-client
-urllib3==2.0.7
+    #hangement de version vulnerabilité CVE-2025-66418 │          │        │ 2.0.7             │ 2.6.0
+urllib3==2.6.0
     # via requests
 wrapt==1.16.0
     # via
