@@ -23,7 +23,7 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-# 完全跳过 pprof
+
 RUN npm install --only=production --omit=dev --ignore-scripts
 RUN npm uninstall pprof @google-cloud/profiler --no-save || true
 
