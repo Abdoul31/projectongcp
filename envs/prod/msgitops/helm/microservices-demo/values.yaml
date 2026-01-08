@@ -1,0 +1,194 @@
+# Namespace de déploiement
+namespace: microservices
+
+global:
+  imagePullPolicy: IfNotPresent
+
+
+services:
+  adservice:
+    enabled: true
+    image:
+      repository: europe-west2-docker.pkg.dev/manssacloudgcp/microservices-demo/adservice
+      tag: "1.0.0"
+    port: 7070
+    type: ClusterIP
+    replicas: 2
+
+  cartservice:
+    enabled: true
+    image:
+      repository: europe-west1-docker.pkg.dev/manssacloudgcp/microservices-demo/cartservice
+      tag: "1.0.0"
+    port: 7070                 
+    type: ClusterIP
+    replicas: 2
+    resources:
+      requests:
+        cpu: 200m
+        memory: 128Mi
+      limits:
+        cpu: 300m
+        memory: 256Mi
+
+  checkoutservice:
+    enabled: true
+    image:
+      repository: europe-west1-docker.pkg.dev/manssacloudgcp/microservices-demo/checkoutservice
+      tag: "1.0.0"
+    port: 5050
+    type: ClusterIP
+    replicas: 2
+    resources:               
+      requests:
+        cpu: 100m
+        memory: 64Mi
+      limits:
+        cpu: 200m
+        memory: 128Mi
+
+  currencyservice:
+    enabled: true
+    image:
+      repository: europe-west1-docker.pkg.dev/manssacloudgcp/microservices-demo/currencyservice
+      tag: "1.0.0"
+    port: 7000
+    type: ClusterIP
+    replicas: 2
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 200m
+        memory: 256Mi
+
+  emailservice:
+    enabled: true
+    image:
+      repository: europe-west1-docker.pkg.dev/manssacloudgcp/microservices-demo/emailservice
+      tag: "1.0.0"
+    port: 8080
+    type: ClusterIP
+    replicas: 1
+    resources:
+      requests:
+        cpu: 100m
+        memory: 64Mi
+      limits:
+        cpu: 200m
+        memory: 128Mi
+
+  frontend:
+    enabled: true
+    image:
+      repository: europe-west1-docker.pkg.dev/manssacloudgcp/microservices-demo/frontend
+      tag: "1.0.0"
+    port: 8080
+    type: ClusterIP             # ✅ on passera par Ingress GCP
+    replicas: 2
+    resources:
+      requests:
+        cpu: 100m
+        memory: 64Mi
+      limits:
+        cpu: 200m
+        memory: 128Mi
+    hpa:
+      enabled: true
+      min: 2
+      max: 4
+      cpu: 80
+## Ajout LoadBalancer ingress
+  ingress:
+    enabled: true
+    host: frontend.mondomaine.com
+
+  loadgenerator:
+    enabled: true
+    image:
+      repository: europe-west1-docker.pkg.dev/manssacloudgcp/microservices-demo/loadgenerator
+      tag: "1.0.0"
+    port: 8080
+    type: ClusterIP
+    replicas: 1
+    resources:
+      requests:
+        cpu: 300m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
+
+  paymentservice:
+    enabled: true
+    image:
+      repository: europe-west1-docker.pkg.dev/manssacloudgcp/microservices-demo/paymentservice
+      tag: "1.0.0"
+    port: 50051
+    type: ClusterIP
+    replicas: 1
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 200m
+        memory: 256Mi
+
+  productcatalogservice:
+    enabled: true
+    image:
+      repository: europe-west1-docker.pkg.dev/manssacloudgcp/microservices-demo/productcatalogservice
+      tag: "1.0.0"
+    port: 3550
+    type: ClusterIP
+    replicas: 2
+    resources:
+      requests:
+        cpu: 100m
+        memory: 64Mi
+      limits:
+        cpu: 200m
+        memory: 128Mi  
+
+  recommendationservice:
+    enabled: true
+    image:
+      repository: europe-west1-docker.pkg.dev/manssacloudgcp/microservices-demo/recommendationservice
+      tag: "1.0.0"
+    port: 8080
+    type: ClusterIP
+    replicas: 2
+    resources:
+      requests:
+        cpu: 100m
+        memory: 220Mi
+      limits:
+        cpu: 200m
+        memory: 450Mi
+
+  shippingservice:
+    enabled: true
+    image:
+      repository: europe-west1-docker.pkg.dev/manssacloudgcp/microservices-demo/shippingservice
+      tag: "1.0.0"
+    port: 50051
+    type: ClusterIP
+    replicas: 1
+    resources:
+      requests:
+        cpu: 100m
+        memory: 64Mi
+      limits:
+        cpu: 200m
+        memory: 128Mi
+  ### base de donnée postgre
+  postgres:
+      enabled: true
+      host: 10.11.0.11         
+      port: 5432
+      database: ms-shop
+      user: pguser
+      secretName: postgres-secret
+

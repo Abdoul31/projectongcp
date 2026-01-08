@@ -1,0 +1,33 @@
+##Installation de charte helm Declaratif GitOps
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: microservices-demo
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/Abdoul31/projectongcp.git
+    targetRevision: main
+    path: helm/microservices-demo
+    helm:
+      valueFiles:
+        - values.yaml
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: microservices
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+env:
+  - name: DB_HOST
+    value: {{ .Values.postgres.host }}
+  - name: DB_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: {{ .Values.postgres.secretName }}
+        key: POSTGRES_PASSWORD
