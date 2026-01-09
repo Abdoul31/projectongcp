@@ -11,7 +11,7 @@ Les objectifs principaux sont de :
 - Maîtriser les services et l'architecture de Google Cloud Platform
 - Implémenter les pratiques DevOps modernes
 - Couvrir l'ensemble de la chaîne CI/CD
-- Déployer et gérer une application basée sur des microservices à grande échelle
+- Déployer et gérer une application basée sur des microservices
 
 ## Technologies & Services GCP utilisés
 
@@ -31,11 +31,11 @@ Les objectifs principaux sont de :
 
 ### Réseau & Stockage
 - **VPC** - Trois sous-réseaux pour le cluster
-- **Cloud Load Balancer** - Distribution du trafic
-- **PostgreSQL** - Base de données relationnelle
+- **Cloud Load Balancer** - Distribution du trafic pour le frontend
+- **PostgreSQL** - Base de données 
 
 ### Monitoring & Observabilité
-- **ELK Stack** (Elasticsearch, Logstash, Kibana) - Gestion et analyse des logs
+- **ELK Stack** (Elasticsearch, Logstash, Kibana) - Pour gestion et analyse des logs
 - **Prometheus** - Collecte de métriques
 - **Grafana** - Visualisation et tableaux de bord
 
@@ -44,13 +44,13 @@ Les objectifs principaux sont de :
 Le projet implémente une architecture complète de microservices avec :
 - 11 microservices interconnectés de l'application Online Boutique
 - Pipelines CI/CD automatisés
-- Monitoring et logging complets
-- Analyse de sécurité et gestion des vulnérabilités
+- Monitoring et logging 
+- Analyse de sécurité et gestion des vulnérabilités (Trivy, secret manager...)
 - Workflow de déploiement basé sur GitOps
 
 ## Instructions d'installation et de configuration
 
-[Ajoutez vos instructions d'installation et de configuration ici]
+A venir
 
 ## Documentation
 
