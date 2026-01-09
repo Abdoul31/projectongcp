@@ -1,4 +1,5 @@
-Passionner de IT (Devops) le gout du chalenge toujours apprendre plus !!
+Passionné d’IT (DevOps), avec le goût du challenge et l’envie d’apprendre toujours plus!
+
 **Note** : Il s'agit d'un projet d'apprentissage et de démonstration basé sur l'application de démonstration de microservices de Google.
 # Simulation d'un Environnement DevOps sur Google Cloud Platform
 
