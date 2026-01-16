@@ -42,19 +42,70 @@ resource "google_compute_global_address" "add-pods" {
   prefix_length = 16
   network       = google_compute_network.vpc.id
 }
-
+# peering pour SQL
 resource "google_compute_global_address" "add-services" {
   name          = "${var.network_name}-add-services"
   purpose       = "VPC_PEERING"
   address_type  = "INTERNAL"
   prefix_length = 20
   network       = google_compute_network.vpc.id
+  address       = "10.20.0.0"
 }
 
-# Service Networking connection (Private Service Access) - required for Cloud SQL private ip
+# Service réseau pour la connection privée du cloud sql posgre
 resource "google_service_networking_connection" "private_vpc_connection" {
   network                 = google_compute_network.vpc.id
   service                 = "servicenetworking.googleapis.com"
   reserved_peering_ranges = [google_compute_global_address.add-pods.name]
-  depends_on              = [google_compute_global_address.add-pods, google_compute_global_address.add-services]
+  #depends_on              = [google_compute_global_address.add-pods, google_compute_global_address.add-services]
+  deletion_policy = "ABANDON"
+}
+
+
+# Configuration Cloud NAT pour le cluster gke
+resource "google_compute_router" "router" {
+  name    = "${var.network_name}-router"
+  region  = var.region
+  network = google_compute_network.vpc.id
+  
+  bgp {
+    asn               = 64514
+    advertise_mode    = "CUSTOM"  # Amélioration : Contrôle des routes annoncées
+    advertised_groups = ["ALL_SUBNETS"]
+    
+    # Optionnel : Annoncer des plages personnalisées
+    # advertised_ip_ranges {
+    #   range = "10.0.0.0/8"
+    # }
+  }
+}
+
+# IPs NAT statiques (haute disponibilité)
+resource "google_compute_address" "nat_ip" {
+  count  = 2
+  name   = "${var.network_name}-nat-ip-${count.index}"
+  region = var.region
+  
+}
+# Configuration cloud router pour le routage dynamique BGP
+resource "google_compute_router_nat" "nat" {
+  name   = "${var.network_name}-nat"
+  router = google_compute_router.router.name
+  region = var.region
+  
+  nat_ip_allocate_option = "MANUAL_ONLY"
+  nat_ips                = google_compute_address.nat_ip[*].self_link
+  
+  source_subnetwork_ip_ranges_to_nat = "LIST_OF_SUBNETWORKS"
+  
+  subnetwork {
+    name                    = google_compute_subnetwork.private.id
+    source_ip_ranges_to_nat = ["ALL_IP_RANGES"]
+  }
+
+  
+  log_config {
+    enable = true
+    filter = "ERRORS_ONLY"
+  }
 }
