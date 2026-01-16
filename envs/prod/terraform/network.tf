@@ -34,7 +34,7 @@ resource "google_compute_subnetwork" "private" {
   private_ip_google_access = true
  }
 
-# Reserve pod/service ranges (for GKE)
+# Reserve pod/service ranges pour gke
 resource "google_compute_global_address" "add-pods" {
   name          = "${var.network_name}-add-pods"
   purpose       = "VPC_PEERING"
