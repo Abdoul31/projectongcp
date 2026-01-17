@@ -32,6 +32,16 @@ spec:
               cpu: "500m"
               memory: "512Mi"
 
+      env:
+      - name: DB_HOST
+        value: {{ .Values.postgres.host | quote }}
+      - name: DB_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: {{ .Values.postgres.secretName }}
+            key: POSTGRES_PASSWORD
+
+
 ---
 {{ end }}
 ---

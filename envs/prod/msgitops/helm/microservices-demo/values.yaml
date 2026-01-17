@@ -85,7 +85,7 @@ services:
       repository: europe-west1-docker.pkg.dev/manssacloudgcp/microservices-demo/frontend
       tag: "1.0.0"
     port: 8080
-    type: ClusterIP             # ✅ on passera par Ingress GCP
+    type: ClusterIP             
     replicas: 2
     resources:
       requests:
