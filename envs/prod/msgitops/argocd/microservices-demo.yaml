@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/Abdoul31/projectongcp.git
     targetRevision: main
-    path: helm/microservices-demo
+    path: envs/prod/msgitops/helm/microservices-demo
     helm:
       valueFiles:
         - values.yaml
@@ -23,11 +23,4 @@ spec:
     automated:
       prune: true
       selfHeal: true
-env:
-  - name: DB_HOST
-    value: {{ .Values.postgres.host }}
-  - name: DB_PASSWORD
-    valueFrom:
-      secretKeyRef:
-        name: {{ .Values.postgres.secretName }}
-        key: POSTGRES_PASSWORD
+
