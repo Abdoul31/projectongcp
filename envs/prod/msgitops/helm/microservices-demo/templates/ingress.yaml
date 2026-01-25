@@ -1,26 +1,20 @@
-
+#ingress.yaml
 apiVersion: networking.k8s.io/v1
-kind: ingress
+kind: Ingress
 metadata:
-  name: frontend-ingress
-  namespace: {{ .Values.namespace }}
+  name: {{ include "microservices-demo.fullname" . }}
   annotations:
     kubernetes.io/ingress.class: "gce"
-    kubernetes.io/ingress.allow-http: "true"
 spec:
   rules:
-    - host: {{ .Values.ingress.host }}
+    - host: {{ .Values.services.frontend.ingress.host | quote }}
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
-              services: 
+              service:
                 name: frontend
                 port:
-                  number:8080
-                  
-
-
-
+                  number: 80
 

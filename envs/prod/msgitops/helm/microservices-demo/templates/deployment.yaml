@@ -31,14 +31,14 @@ spec:
             limits:
               cpu: "500m"
               memory: "512Mi"
-
-      env:
+  ###Accès global values postgre
+      eenv:
       - name: DB_HOST
-        value: {{ .Values.postgres.host | quote }}
+        value: {{ $.Values.postgres.host | default "postgres" | quote }}
       - name: DB_PASSWORD
         valueFrom:
           secretKeyRef:
-            name: {{ .Values.postgres.secretName }}
+            name: {{ $.Values.postgres.secretName }}
             key: POSTGRES_PASSWORD
 
 

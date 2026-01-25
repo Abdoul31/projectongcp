@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/Abdoul31/projectongcp.git
     targetRevision: main
-    path: envs/prod/msgitops/helm/microservices-demo
+    path: envs/prod/msgitops/helm/microservices-demo/
     helm:
       valueFiles:
         - values.yaml
