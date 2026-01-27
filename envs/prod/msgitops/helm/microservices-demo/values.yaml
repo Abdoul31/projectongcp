@@ -9,8 +9,8 @@ services:
   adservice:
     enabled: true
     image:
-      repository: europe-west2-docker.pkg.dev/manssacloudgcp/microservices-demo/adservice:54f7206
-      tag: "1.0.0"
+      repository: europe-west2-docker.pkg.dev/manssacloudgcp/microservices-demo/adservice
+      tag: "54f7206"
     port: 7070
     type: ClusterIP
     replicas: 2
