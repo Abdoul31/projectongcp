@@ -10,7 +10,7 @@ services:
     enabled: true
     image:
       repository: europe-west2-docker.pkg.dev/manssacloudgcp/microservices-demo/adservice
-      tag: "54f7206"
+      
     port: 7070
     type: ClusterIP
     replicas: 2
@@ -19,7 +19,7 @@ services:
     enabled: true
     image:
       repository: europe-west2-docker.pkg.dev/manssacloudgcp/microservices-demo/cartservice
-      tag: "1.0.0"
+     
     port: 7070                 
     type: ClusterIP
     replicas: 2
