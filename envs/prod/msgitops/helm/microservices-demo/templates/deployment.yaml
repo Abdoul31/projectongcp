@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: {{ $name }}
-          image: "{{ $svc.image.repository }}:{{ $svc.image }}"
+          image: "{{ $svc.services.image.repository }}:{{ $svc.services.image }}"
           imagePullPolicy: {{ $.Values.global.imagePullPolicy }}
           ports:
             - containerPort: {{ $svc.port }}
