@@ -1,0 +1,9 @@
+#fichier chart app
+apiVersion: v2
+
+name: microservices-demo
+description: Google microservices-demo sur gke cluster
+
+type: application
+version: 0.1.0
+appVersion: "1.0"
