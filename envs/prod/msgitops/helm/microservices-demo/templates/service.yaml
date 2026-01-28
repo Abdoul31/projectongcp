@@ -1,0 +1,21 @@
+{{ range $name, $svc := .Values.services }}
+---
+{{ if and $svc.enabled (ne $name "postgres") }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $name }}
+  namespace: {{ $.Values.namespace }}
+spec:
+  type: {{ $svc.type | default "ClusterIP" }}
+  selector:
+    app: {{ $name }}
+  ports:
+    - port: {{ $svc.port }}
+      targetPort: {{ $svc.port }}
+      protocol: TCP
+---
+{{ end }}
+---
+{{ end }}
